@@ -3,11 +3,15 @@
 %}
 
 %%
-SELECT|FROM|WHERE|INSERT|DELETE|UPDATE printf("%s es: Palabra Clave\n", yytext);
-AND|OR|NOT  printf("%s es: Operador Logico\n", yytext);
->|<|>=|<=|=|!=|<> printf("%s es: Operador Relacional\n", yytext);
-\"[0-9a-zA-Z_ ]*\"|[0-9]+ printf("%s es: Constante\n", yytext);
-[a-zA-Z_]+[,]?|[*]  printf("%s es: Identificador\n", yytext);
+CREATE|DROP|ALTER|TRUNCATE                       {return DLL}          /*Data Definition Language*/
+TABLE|SCHEMA|DATABASE                            {return TYPE}         /*Tipo de Estructura*/
+SELECT|INSERT|DELETE|UPDATE                      {return DML}          /*Data Manipulation Language*/
+FROM|WHERE|"GROUP BY"|HAVING|"ORDER BY"          {return CLAUS}        /*Cláusulas*/
+AND|OR|NOT                                       {return LOGIC}        /*Operadores*/
+INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT}     /*Tipos de Datos*/
+>|<|>=|<=|=|!=|<>                                {return RELAC}        /*Relaiones*/
+\"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST}        /*Constante*/
+[a-zA-Z_]+[,]?|[*]                               {return IDENT}        /*Identificadores*/
 [ \t]
 . printf("%s es: Caracter desconocido\n", yytext);
 %%
