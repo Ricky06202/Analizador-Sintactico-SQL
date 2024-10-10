@@ -5,6 +5,8 @@
 
 void yyerror(const char *s);
 int yylex(void);
+
+
 }%
 
 %token DLL, TYPE, DML, CLAUS LOGIC, TRANSACT, RELAC, CONST, IDENT
@@ -49,3 +51,16 @@ identifier: INDET
     ;
 
 %%
+
+int main(){
+    prinf("Iniciando analisis sintactico...\n");
+
+        yyparse();
+
+    prinf("Iniciando analisis sintactico...\n");
+    return 0;
+}
+
+void yyerror(const char *s) {
+    fprintf(stderr, "Error sintactico: %s\n", s);
+}
