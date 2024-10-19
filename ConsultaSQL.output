@@ -1,0 +1,395 @@
+Terminals unused in grammar
+
+   LOGIC
+   TRANSACT
+   RELAC
+
+
+Gramática
+
+    0 $accept: input $end
+
+    1 input: /* vacío */
+    2      | input consult
+    3      | input "salir"
+
+    4 consult: commandDLL
+    5        | commandDML
+
+    6 commandDLL: DLL TYPE IDENT
+    7           | commandDLL '(' fieldsDLL ')'
+
+    8 commandDML: DML identifier CLAUS identifier
+    9           | commandDML CLAUS identifier
+   10           | commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML ')'
+
+   11 fieldsDLL: identifier identifier '(' CONST ')'
+   12          | "," fieldsDLL
+
+   13 fieldsDML: identifier
+   14          | "," fieldsDML
+
+   15 identifier: IDENT
+   16           | CONST
+
+
+Terminales con las reglas donde aparecen
+
+$end (0) 0
+'(' (40) 7 10 11
+')' (41) 7 10 11
+error (256)
+DLL (258) 6
+TYPE (259) 6
+DML (260) 8
+CLAUS (261) 8 9
+LOGIC (262)
+TRANSACT (263)
+RELAC (264)
+CONST (265) 11 16
+IDENT (266) 6 15
+"salir" (267) 3
+"VALUES" (268) 10
+"," (269) 12 14
+
+
+No terminales con las reglas donde aparecen
+
+$accept (17)
+    en la izquierda: 0
+input (18)
+    en la izquierda: 1 2 3, en la derecha: 0 2 3
+consult (19)
+    en la izquierda: 4 5, en la derecha: 2
+commandDLL (20)
+    en la izquierda: 6 7, en la derecha: 4 7
+commandDML (21)
+    en la izquierda: 8 9 10, en la derecha: 5 9 10
+fieldsDLL (22)
+    en la izquierda: 11 12, en la derecha: 7 12
+fieldsDML (23)
+    en la izquierda: 13 14, en la derecha: 10 14
+identifier (24)
+    en la izquierda: 15 16, en la derecha: 8 9 11 13
+
+
+estado 0
+
+    0 $accept: . input $end
+
+    $default  reduce usando la regla 1 (input)
+
+    input  ir al estado 1
+
+
+estado 1
+
+    0 $accept: input . $end
+    2 input: input . consult
+    3      | input . "salir"
+
+    $end     desplazar e ir al estado 2
+    DLL      desplazar e ir al estado 3
+    DML      desplazar e ir al estado 4
+    "salir"  desplazar e ir al estado 5
+
+    consult     ir al estado 6
+    commandDLL  ir al estado 7
+    commandDML  ir al estado 8
+
+
+estado 2
+
+    0 $accept: input $end .
+
+    $default  aceptar
+
+
+estado 3
+
+    6 commandDLL: DLL . TYPE IDENT
+
+    TYPE  desplazar e ir al estado 9
+
+
+estado 4
+
+    8 commandDML: DML . identifier CLAUS identifier
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+
+    identifier  ir al estado 12
+
+
+estado 5
+
+    3 input: input "salir" .
+
+    $default  reduce usando la regla 3 (input)
+
+
+estado 6
+
+    2 input: input consult .
+
+    $default  reduce usando la regla 2 (input)
+
+
+estado 7
+
+    4 consult: commandDLL .
+    7 commandDLL: commandDLL . '(' fieldsDLL ')'
+
+    '('  desplazar e ir al estado 13
+
+    $default  reduce usando la regla 4 (consult)
+
+
+estado 8
+
+    5 consult: commandDML .
+    9 commandDML: commandDML . CLAUS identifier
+   10           | commandDML . '(' fieldsDML ')' "VALUES" '(' fieldsDML ')'
+
+    CLAUS  desplazar e ir al estado 14
+    '('    desplazar e ir al estado 15
+
+    $default  reduce usando la regla 5 (consult)
+
+
+estado 9
+
+    6 commandDLL: DLL TYPE . IDENT
+
+    IDENT  desplazar e ir al estado 16
+
+
+estado 10
+
+   16 identifier: CONST .
+
+    $default  reduce usando la regla 16 (identifier)
+
+
+estado 11
+
+   15 identifier: IDENT .
+
+    $default  reduce usando la regla 15 (identifier)
+
+
+estado 12
+
+    8 commandDML: DML identifier . CLAUS identifier
+
+    CLAUS  desplazar e ir al estado 17
+
+
+estado 13
+
+    7 commandDLL: commandDLL '(' . fieldsDLL ')'
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+    ","    desplazar e ir al estado 18
+
+    fieldsDLL   ir al estado 19
+    identifier  ir al estado 20
+
+
+estado 14
+
+    9 commandDML: commandDML CLAUS . identifier
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+
+    identifier  ir al estado 21
+
+
+estado 15
+
+   10 commandDML: commandDML '(' . fieldsDML ')' "VALUES" '(' fieldsDML ')'
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+    ","    desplazar e ir al estado 22
+
+    fieldsDML   ir al estado 23
+    identifier  ir al estado 24
+
+
+estado 16
+
+    6 commandDLL: DLL TYPE IDENT .
+
+    $default  reduce usando la regla 6 (commandDLL)
+
+
+estado 17
+
+    8 commandDML: DML identifier CLAUS . identifier
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+
+    identifier  ir al estado 25
+
+
+estado 18
+
+   12 fieldsDLL: "," . fieldsDLL
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+    ","    desplazar e ir al estado 18
+
+    fieldsDLL   ir al estado 26
+    identifier  ir al estado 20
+
+
+estado 19
+
+    7 commandDLL: commandDLL '(' fieldsDLL . ')'
+
+    ')'  desplazar e ir al estado 27
+
+
+estado 20
+
+   11 fieldsDLL: identifier . identifier '(' CONST ')'
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+
+    identifier  ir al estado 28
+
+
+estado 21
+
+    9 commandDML: commandDML CLAUS identifier .
+
+    $default  reduce usando la regla 9 (commandDML)
+
+
+estado 22
+
+   14 fieldsDML: "," . fieldsDML
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+    ","    desplazar e ir al estado 22
+
+    fieldsDML   ir al estado 29
+    identifier  ir al estado 24
+
+
+estado 23
+
+   10 commandDML: commandDML '(' fieldsDML . ')' "VALUES" '(' fieldsDML ')'
+
+    ')'  desplazar e ir al estado 30
+
+
+estado 24
+
+   13 fieldsDML: identifier .
+
+    $default  reduce usando la regla 13 (fieldsDML)
+
+
+estado 25
+
+    8 commandDML: DML identifier CLAUS identifier .
+
+    $default  reduce usando la regla 8 (commandDML)
+
+
+estado 26
+
+   12 fieldsDLL: "," fieldsDLL .
+
+    $default  reduce usando la regla 12 (fieldsDLL)
+
+
+estado 27
+
+    7 commandDLL: commandDLL '(' fieldsDLL ')' .
+
+    $default  reduce usando la regla 7 (commandDLL)
+
+
+estado 28
+
+   11 fieldsDLL: identifier identifier . '(' CONST ')'
+
+    '('  desplazar e ir al estado 31
+
+
+estado 29
+
+   14 fieldsDML: "," fieldsDML .
+
+    $default  reduce usando la regla 14 (fieldsDML)
+
+
+estado 30
+
+   10 commandDML: commandDML '(' fieldsDML ')' . "VALUES" '(' fieldsDML ')'
+
+    "VALUES"  desplazar e ir al estado 32
+
+
+estado 31
+
+   11 fieldsDLL: identifier identifier '(' . CONST ')'
+
+    CONST  desplazar e ir al estado 33
+
+
+estado 32
+
+   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" . '(' fieldsDML ')'
+
+    '('  desplazar e ir al estado 34
+
+
+estado 33
+
+   11 fieldsDLL: identifier identifier '(' CONST . ')'
+
+    ')'  desplazar e ir al estado 35
+
+
+estado 34
+
+   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' . fieldsDML ')'
+
+    CONST  desplazar e ir al estado 10
+    IDENT  desplazar e ir al estado 11
+    ","    desplazar e ir al estado 22
+
+    fieldsDML   ir al estado 36
+    identifier  ir al estado 24
+
+
+estado 35
+
+   11 fieldsDLL: identifier identifier '(' CONST ')' .
+
+    $default  reduce usando la regla 11 (fieldsDLL)
+
+
+estado 36
+
+   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML . ')'
+
+    ')'  desplazar e ir al estado 37
+
+
+estado 37
+
+   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML ')' .
+
+    $default  reduce usando la regla 10 (commandDML)

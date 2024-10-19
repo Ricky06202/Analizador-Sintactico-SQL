@@ -7,9 +7,17 @@ void yyerror(const char *s);
 int yylex(void);
 
 
-}%
+%}
 
-%token DLL, TYPE, DML, CLAUS LOGIC, TRANSACT, RELAC, CONST, IDENT
+%token DLL
+%token TYPE
+%token DML
+%token CLAUS
+%token LOGIC
+%token TRANSACT
+%token RELAC
+%token CONST
+%token IDENT
 %start input
 
 %% /*Aqui va las instrucciones como si trabajaramos con GLC*/
@@ -26,7 +34,7 @@ consult: commandDLL
     ;
 
 /*Comandos para CREATE, DROP, ALTER y TRUNCATE*/
-commandDLL: DLL TYPE INDET
+commandDLL: DLL TYPE IDENT
     | commandDLL '(' fieldsDLL ')'
     ;
 
@@ -38,15 +46,15 @@ commandDML: DML identifier CLAUS identifier
 
 /*campos de la tabla */
 fieldsDLL: identifier identifier '(' CONST ')'
-    | "," fields
+    | "," fieldsDLL
     ;
 
 fieldsDML: identifier
-    | "," fields
+    | "," fieldsDML
     ;
 
 /*detectar nombre del identificador*/
-identifier: INDET
+identifier: IDENT
     | CONST
     ;
 
