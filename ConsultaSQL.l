@@ -3,15 +3,36 @@
 %}
 
 %%
-CREATE|DROP|ALTER|TRUNCATE                       {return DLL}          /*Data Definition Language*/
-TABLE|SCHEMA|DATABASE                            {return TYPE}         /*Tipo de Estructura*/
-SELECT|INSERT|DELETE|UPDATE                      {return DML}          /*Data Manipulation Language*/
-FROM|WHERE|"GROUP BY"|HAVING|"ORDER BY"          {return CLAUS}        /*Cláusulas*/
-AND|OR|NOT                                       {return LOGIC}        /*Operadores*/
-INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT}     /*Tipos de Datos*/
->|<|>=|<=|=|!=|<>                                {return RELAC}        /*Relaiones*/
-\"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST}        /*Constante*/
-[a-zA-Z_]+[,]?|[*]                               {return IDENT}        /*Identificadores*/
+"CREATE"                                         {return CREATE;}       /*Data Definition Language*/
+"DROP"                                           {return DROP;}          
+"ALTER"                                          {return ALTER;}          
+"TRUNCATE"                                       {return TRUNCATE;}     
+
+"TABLE"                                          {return TABLE;}        /*Tipo de Estructura*/
+"SCHEMA"                                         {return SCHEMA;}   
+"DATABASE"                                       {return DATABASE;}
+
+"SELECT INTO"                                         {return SELECT;}       /*Data Manipulation Language*/
+"INSERT"                                         {return INSERT;}  
+"DELETE"                                         {return DELETE;}  
+"UPDATE"                                         {return UPDATE;}  
+
+"FROM"                                           {return FROM;}         /*Cláusulas*/
+"SET"                                            {return SET;}  
+"WHERE"                                          {return WHERE;}  
+"GROUP BY"                                       {return GROUP;}  
+"HAVING"                                         {return HAVING;}  
+"ORDER BY"                                       {return ORDER;}
+"ADD"                                            {return ADD;} 
+"VALUES"                                         {return VALUES;} 
+
+"AND"|"OR"|"NOT"                                 {return LOGIC;}          /*Operadores*/
+
+INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT;}     /*Tipos de Datos*/
+>|<|>=|<=|=|!=|<>                                {return RELAC;}        /*Relaciones*/
+\"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST;}        /*Constante*/
+[a-zA-Z_]+[,]?|[*]                               {return IDENT;}        /*Identificadores*/
+[0-9]+                                           {return NUM;}
 [ \t]
 . printf("%s es: Caracter desconocido\n", yytext);
 %%

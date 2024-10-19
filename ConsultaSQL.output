@@ -11,7 +11,7 @@ Gramática
 
     1 input: /* vacío */
     2      | input consult
-    3      | input "salir"
+    3      | input 's'
 
     4 consult: commandDLL
     5        | commandDML
@@ -21,13 +21,13 @@ Gramática
 
     8 commandDML: DML identifier CLAUS identifier
     9           | commandDML CLAUS identifier
-   10           | commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML ')'
+   10           | commandDML '(' fieldsDML ')' 'V' '(' fieldsDML ')'
 
    11 fieldsDLL: identifier identifier '(' CONST ')'
-   12          | "," fieldsDLL
+   12          | ',' fieldsDLL
 
    13 fieldsDML: identifier
-   14          | "," fieldsDML
+   14          | ',' fieldsDML
 
    15 identifier: IDENT
    16           | CONST
@@ -38,6 +38,9 @@ Terminales con las reglas donde aparecen
 $end (0) 0
 '(' (40) 7 10 11
 ')' (41) 7 10 11
+',' (44) 12 14
+'V' (86) 10
+'s' (115) 3
 error (256)
 DLL (258) 6
 TYPE (259) 6
@@ -48,9 +51,6 @@ TRANSACT (263)
 RELAC (264)
 CONST (265) 11 16
 IDENT (266) 6 15
-"salir" (267) 3
-"VALUES" (268) 10
-"," (269) 12 14
 
 
 No terminales con las reglas donde aparecen
@@ -86,12 +86,12 @@ estado 1
 
     0 $accept: input . $end
     2 input: input . consult
-    3      | input . "salir"
+    3      | input . 's'
 
-    $end     desplazar e ir al estado 2
-    DLL      desplazar e ir al estado 3
-    DML      desplazar e ir al estado 4
-    "salir"  desplazar e ir al estado 5
+    $end  desplazar e ir al estado 2
+    DLL   desplazar e ir al estado 3
+    DML   desplazar e ir al estado 4
+    's'   desplazar e ir al estado 5
 
     consult     ir al estado 6
     commandDLL  ir al estado 7
@@ -124,7 +124,7 @@ estado 4
 
 estado 5
 
-    3 input: input "salir" .
+    3 input: input 's' .
 
     $default  reduce usando la regla 3 (input)
 
@@ -150,7 +150,7 @@ estado 8
 
     5 consult: commandDML .
     9 commandDML: commandDML . CLAUS identifier
-   10           | commandDML . '(' fieldsDML ')' "VALUES" '(' fieldsDML ')'
+   10           | commandDML . '(' fieldsDML ')' 'V' '(' fieldsDML ')'
 
     CLAUS  desplazar e ir al estado 14
     '('    desplazar e ir al estado 15
@@ -192,7 +192,7 @@ estado 13
 
     CONST  desplazar e ir al estado 10
     IDENT  desplazar e ir al estado 11
-    ","    desplazar e ir al estado 18
+    ','    desplazar e ir al estado 18
 
     fieldsDLL   ir al estado 19
     identifier  ir al estado 20
@@ -210,11 +210,11 @@ estado 14
 
 estado 15
 
-   10 commandDML: commandDML '(' . fieldsDML ')' "VALUES" '(' fieldsDML ')'
+   10 commandDML: commandDML '(' . fieldsDML ')' 'V' '(' fieldsDML ')'
 
     CONST  desplazar e ir al estado 10
     IDENT  desplazar e ir al estado 11
-    ","    desplazar e ir al estado 22
+    ','    desplazar e ir al estado 22
 
     fieldsDML   ir al estado 23
     identifier  ir al estado 24
@@ -239,11 +239,11 @@ estado 17
 
 estado 18
 
-   12 fieldsDLL: "," . fieldsDLL
+   12 fieldsDLL: ',' . fieldsDLL
 
     CONST  desplazar e ir al estado 10
     IDENT  desplazar e ir al estado 11
-    ","    desplazar e ir al estado 18
+    ','    desplazar e ir al estado 18
 
     fieldsDLL   ir al estado 26
     identifier  ir al estado 20
@@ -275,11 +275,11 @@ estado 21
 
 estado 22
 
-   14 fieldsDML: "," . fieldsDML
+   14 fieldsDML: ',' . fieldsDML
 
     CONST  desplazar e ir al estado 10
     IDENT  desplazar e ir al estado 11
-    ","    desplazar e ir al estado 22
+    ','    desplazar e ir al estado 22
 
     fieldsDML   ir al estado 29
     identifier  ir al estado 24
@@ -287,7 +287,7 @@ estado 22
 
 estado 23
 
-   10 commandDML: commandDML '(' fieldsDML . ')' "VALUES" '(' fieldsDML ')'
+   10 commandDML: commandDML '(' fieldsDML . ')' 'V' '(' fieldsDML ')'
 
     ')'  desplazar e ir al estado 30
 
@@ -308,7 +308,7 @@ estado 25
 
 estado 26
 
-   12 fieldsDLL: "," fieldsDLL .
+   12 fieldsDLL: ',' fieldsDLL .
 
     $default  reduce usando la regla 12 (fieldsDLL)
 
@@ -329,16 +329,16 @@ estado 28
 
 estado 29
 
-   14 fieldsDML: "," fieldsDML .
+   14 fieldsDML: ',' fieldsDML .
 
     $default  reduce usando la regla 14 (fieldsDML)
 
 
 estado 30
 
-   10 commandDML: commandDML '(' fieldsDML ')' . "VALUES" '(' fieldsDML ')'
+   10 commandDML: commandDML '(' fieldsDML ')' . 'V' '(' fieldsDML ')'
 
-    "VALUES"  desplazar e ir al estado 32
+    'V'  desplazar e ir al estado 32
 
 
 estado 31
@@ -350,7 +350,7 @@ estado 31
 
 estado 32
 
-   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" . '(' fieldsDML ')'
+   10 commandDML: commandDML '(' fieldsDML ')' 'V' . '(' fieldsDML ')'
 
     '('  desplazar e ir al estado 34
 
@@ -364,11 +364,11 @@ estado 33
 
 estado 34
 
-   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' . fieldsDML ')'
+   10 commandDML: commandDML '(' fieldsDML ')' 'V' '(' . fieldsDML ')'
 
     CONST  desplazar e ir al estado 10
     IDENT  desplazar e ir al estado 11
-    ","    desplazar e ir al estado 22
+    ','    desplazar e ir al estado 22
 
     fieldsDML   ir al estado 36
     identifier  ir al estado 24
@@ -383,13 +383,13 @@ estado 35
 
 estado 36
 
-   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML . ')'
+   10 commandDML: commandDML '(' fieldsDML ')' 'V' '(' fieldsDML . ')'
 
     ')'  desplazar e ir al estado 37
 
 
 estado 37
 
-   10 commandDML: commandDML '(' fieldsDML ')' "VALUES" '(' fieldsDML ')' .
+   10 commandDML: commandDML '(' fieldsDML ')' 'V' '(' fieldsDML ')' .
 
     $default  reduce usando la regla 10 (commandDML)
