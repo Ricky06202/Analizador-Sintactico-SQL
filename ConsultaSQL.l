@@ -1,5 +1,6 @@
 %{
 #include <stdio.h>
+#include "ConsultaSQL.tab.h"
 %}
 
 %%
@@ -12,7 +13,7 @@
 "SCHEMA"                                         {return SCHEMA;}   
 "DATABASE"                                       {return DATABASE;}
 
-"SELECT INTO"                                         {return SELECT;}       /*Data Manipulation Language*/
+"SELECT INTO"                                    {return SELECT;}       /*Data Manipulation Language*/
 "INSERT"                                         {return INSERT;}  
 "DELETE"                                         {return DELETE;}  
 "UPDATE"                                         {return UPDATE;}  
@@ -26,21 +27,20 @@
 "ADD"                                            {return ADD;} 
 "VALUES"                                         {return VALUES;} 
 
-"AND"|"OR"|"NOT"                                 {return LOGIC;}          /*Operadores*/
+"AND"|"OR"|"NOT"                                 {return LOGIC;}        /*Operadores*/
 
 INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT;}     /*Tipos de Datos*/
 >|<|>=|<=|=|!=|<>                                {return RELAC;}        /*Relaciones*/
 \"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST;}        /*Constante*/
 [a-zA-Z_]+[,]?|[*]                               {return IDENT;}        /*Identificadores*/
-[0-9]+                                           {return NUM;}
+[0-9]+                                           {return NUM;}          /*Número*/
+";"                                              {return SEMICOLON;}    /*Punto y coma final*/
 [ \t]
 . printf("%s es: Caracter desconocido\n", yytext);
 %%
 
-int main() {
-  printf("Ingrese una consulta SQL:\n");
-  yylex();
-  return 0;
+int yywrap() {
+    return 1;
 }
 
 

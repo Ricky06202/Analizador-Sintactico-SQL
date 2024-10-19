@@ -38,15 +38,32 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     DLL = 258,
-     TYPE = 259,
-     DML = 260,
-     CLAUS = 261,
-     LOGIC = 262,
-     TRANSACT = 263,
-     RELAC = 264,
-     CONST = 265,
-     IDENT = 266
+     CREATE = 258,
+     DROP = 259,
+     ALTER = 260,
+     TRUNCATE = 261,
+     TABLE = 262,
+     SCHEMA = 263,
+     DATABASE = 264,
+     SELECT = 265,
+     INSERT = 266,
+     DELETE = 267,
+     UPDATE = 268,
+     FROM = 269,
+     SET = 270,
+     WHERE = 271,
+     GROUP = 272,
+     HAVING = 273,
+     ORDER = 274,
+     ADD = 275,
+     VALUES = 276,
+     LOGIC = 277,
+     TRANSACT = 278,
+     RELAC = 279,
+     CONST = 280,
+     IDENT = 281,
+     NUM = 282,
+     SEMICOLON = 283
    };
 #endif
 

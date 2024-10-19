@@ -22,8 +22,8 @@ int yylex(void);
 %token FROM SET WHERE GROUP HAVING ORDER ADD VALUES
 /*Operadores*/
 %token LOGIC
-/*Tipos de datos, relaciones, constantes, identificadores y números*/
-%token TRANSACT RELAC CONST IDENT NUM
+/*Tipos de datos, relaciones, constantes, identificadores, números y punto y coma final de la declaración*/
+%token TRANSACT RELAC CONST IDENT NUM SEMICOLON
 
 
 %% /*Aqui va las instrucciones como si trabajaramos con GLC*/
@@ -40,17 +40,17 @@ consult: commandDLL
     ;
 
 /*Comandos para CREATE, DROP, ALTER y TRUNCATE*/
-commandDLL: CREATE TABLE identifier '(' fieldsDLL ')' ';'
-    | DROP TABLE identifier ';'
-    | ALTER TABLE identifier ADD identifier TRANSACT '(' NUM ')' ';'
-    | TRUNCATE TABLE identifier ';'
+commandDLL: CREATE TABLE identifier '(' fieldsDLL ')' SEMICOLON
+    | DROP TABLE identifier SEMICOLON
+    | ALTER TABLE identifier ADD identifier TRANSACT '(' NUM ')' SEMICOLON
+    | TRUNCATE TABLE identifier SEMICOLON
     ;
 
 /*Comandos para INSERT SELECT UPDATE y DELETE*/
-commandDML: selectCondition ';'
-    | INSERT identifier '(' fieldsDML ')' VALUES '(' fieldsDML ')' ';'
-    | UPDATE identifier SET whereCondition ';'
-    | DELETE FROM identifier whereCondition ';'
+commandDML: selectCondition SEMICOLON
+    | INSERT identifier '(' fieldsDML ')' VALUES '(' fieldsDML ')' SEMICOLON
+    | UPDATE identifier SET whereCondition SEMICOLON
+    | DELETE FROM identifier whereCondition SEMICOLON
     ;
 
 /*Campos de la tabla */
