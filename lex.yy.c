@@ -380,21 +380,21 @@ struct yy_trans_info
 static yyconst flex_int16_t yy_accept[156] =
     {   0,
         0,    0,   36,   34,   33,   35,   34,   34,   28,   29,
-       30,   26,   31,   25,   32,   24,   24,   24,   26,   26,
-       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
-       26,   26,   26,   26,   24,    0,   25,   25,   26,   26,
-       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
-       26,   26,   26,   26,   26,   20,   26,   26,   26,   26,
-       26,   26,   26,   26,   26,   18,   26,   20,   21,   26,
-       26,   26,   26,   26,   26,   26,   26,   26,   26,   26,
-       23,   26,   26,   26,   26,   26,   14,   26,   26,   26,
-       26,   26,   26,   26,   26,   26,   26,   22,    3,    1,
+       30,   27,   31,   23,   32,   25,   25,   25,   27,   27,
+       27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
+       27,   27,   27,   27,   25,    0,   26,   23,   27,   27,
+       27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
+       27,   27,   27,   27,   27,   20,   27,   27,   27,   27,
+       27,   27,   27,   27,   27,   18,   27,   20,   21,   27,
+       27,   27,   27,   27,   27,   27,   27,   27,   27,   27,
+       24,   27,   27,   27,   27,   27,   14,   27,   27,   27,
+       27,   27,   27,   27,   27,   27,   27,   22,    3,    1,
 
-       26,   13,   26,   26,   26,   26,   26,   26,   26,   26,
-       26,   26,   26,   26,    4,   26,   26,   26,   26,   26,
-       26,   26,   26,    6,   26,   26,   26,   26,   15,    2,
-       26,   11,    0,   26,    0,    7,    9,   26,   12,   19,
-       26,   26,    0,    0,    0,   26,    8,   16,    0,   17,
+       27,   13,   27,   27,   27,   27,   27,   27,   27,   27,
+       27,   27,   27,   27,    4,   27,   27,   27,   27,   27,
+       27,   27,   27,    6,   27,   27,   27,   27,   15,    2,
+       27,   11,    0,   27,    0,    7,    9,   27,   12,   19,
+       27,   27,    0,    0,    0,   27,    8,   16,    0,   17,
         5,    0,    0,   10,    0
     } ;
 
@@ -966,27 +966,27 @@ YY_RULE_SETUP
 case 23:
 YY_RULE_SETUP
 #line 38 "ConsultaSQL.l"
-{return TRANSACT;}     /*Tipos de Datos*/
+{return NUM;}          /*Número*/
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
 #line 39 "ConsultaSQL.l"
-{return RELAC;}        /*Relaciones*/
+{return TRANSACT;}     /*Tipos de Datos*/
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
 #line 40 "ConsultaSQL.l"
-{return CONST;}        /*Constante*/
+{return RELAC;}        /*Relaciones*/
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
 #line 41 "ConsultaSQL.l"
-{return IDENT;}        /*Identificadores*/
+{return CONST;}        /*Constante*/
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
 #line 42 "ConsultaSQL.l"
-{return NUM;}          /*Número*/
+{return IDENT;}        /*Identificadores*/
 	YY_BREAK
 case 28:
 YY_RULE_SETUP

@@ -35,11 +35,11 @@
 "ASC"                                            {return ASC;}          /*Orden ascendente y descendente*/
 "DESC"                                           {return DESC;}
 
+[0-9]+                                           {return NUM;}          /*Número*/
 INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT;}     /*Tipos de Datos*/
 >|<|>=|<=|=|!=|<>                                {return RELAC;}        /*Relaciones*/
 \"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST;}        /*Constante*/
 [a-zA-Z_]+[,]?|[*]                               {return IDENT;}        /*Identificadores*/
-[0-9]+                                           {return NUM;}          /*Número*/
 "'"                                              {return QUOTE;}        /*Comilla simple*/
 "("                                              {return ParentesisA;}   
 ")"                                              {return ParentesisC;}   

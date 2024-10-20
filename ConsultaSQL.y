@@ -37,13 +37,13 @@ int yylex();
 /* Entrada de la consulta sql */
 input: /* entrada vacia */
     | input consult         {printf("Consulta correcta. \n\n")}
-    | input errorSintaxis   {printf("")}
+    | input errorSintaxis   
     | input SALIR           {printf("Saliendo del programa. \n\n"); exit(0)}
     ;
 
 /*Consultas*/
 consult: commandDLL SEMICOLON       
-    | commandDML SEMICOLON          
+    | commandDML SEMICOLON      
     ;
 
 errorSintaxis: commandDLL           {printf("La consulta debe terminar con ; \n\n")}
@@ -61,7 +61,7 @@ commandDLL: createCondition
     ;
 
 /*Comandos con CREATE*/
-createCondition: CREATE TABLE identifier ParentesisA fieldsDLL ParentesisC 
+createCondition: CREATE TABLE identifier ParentesisA fieldsCreate ParentesisC 
     | CREATE SCHEMA identifier 
     | CREATE DATABASE identifier
     ;
@@ -81,8 +81,10 @@ selectCondition: SELECT fieldsDML FROM identifier
     ;
 
 /*Encontrar condiciones en el where*/
-whereCondition: WHERE identifier RELAC identifier
-    | whereCondition LOGIC identifier RELAC identifier
+whereCondition: WHERE identifier RELAC QUOTE identifier QUOTE
+    | WHERE identifier RELAC NUM
+    | whereCondition LOGIC identifier RELAC QUOTE identifier QUOTE
+    | whereCondition LOGIC identifier RELAC NUM
     ;
 
 /*Encontrar condiciones en el where*/
@@ -100,8 +102,13 @@ orderCondition: ORDER identifier ASC
     ;
 
 /*Campos de la tabla */
-fieldsDLL: identifier TRANSACT ParentesisA NUM ParentesisC
+/* fieldsDLL: identifier TRANSACT ParentesisA NUM ParentesisC
     | fieldsDLL COMMA identifier TRANSACT ParentesisA NUM ParentesisC
+    ; */
+
+/*Campos para crear tabla*/
+fieldsCreate: identifier TRANSACT
+    | fieldsCreate COMMA identifier TRANSACT
     ;
 
 /*Campos de los datos */
@@ -124,15 +131,15 @@ errorParentesis: INSERT identifier ParentesisA fieldsDML VALUES ParentesisA fiel
     | INSERT identifier ParentesisA fieldsDML ParentesisC VALUES ParentesisA fieldsDML             {printf("Parentesis debe cerrarse \n\n")}
     | INSERT identifier VALUES fieldsDML ParentesisC                    {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
     | INSERT identifier VALUES ParentesisA fieldsDML                    {printf("Parentesis debe cerrarse \n\n")}
-    | identifier TRANSACT  NUM ParentesisC                              {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
+    | identifier TRANSACT NUM ParentesisC                               {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
     | identifier TRANSACT ParentesisA NUM                               {printf("Parentesis debe cerrarse \n\n")}
-    | CREATE TABLE identifier ParentesisA fieldsDLL                     {printf("Parentesis debe cerrarse \n\n")}
-    | CREATE TABLE identifier fieldsDLL ParentesisC                     {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
+    | CREATE TABLE identifier ParentesisA fieldsCreate                  {printf("Parentesis debe cerrarse \n\n")}
+    | CREATE TABLE identifier fieldsCreate ParentesisC                  {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
     | ALTER TABLE identifier ADD identifier TRANSACT ParentesisA NUM    {printf("Parentesis debe cerrarse \n\n")}
     | ALTER TABLE identifier ADD identifier TRANSACT NUM ParentesisC    {printf("Parentesis debe abrirse ante de cerrarse \n\n")}
     ;
 
-errorNames: CREATE TABLE ParentesisA fieldsDLL ParentesisC 
+errorNames: CREATE TABLE ParentesisA fieldsCreate ParentesisC 
     | DROP TABLE  
     | ALTER TABLE ADD identifier TRANSACT ParentesisA NUM ParentesisC 
     | ALTER TABLE identifier ADD TRANSACT ParentesisA NUM ParentesisC 
