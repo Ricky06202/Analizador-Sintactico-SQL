@@ -13,8 +13,8 @@
 "SCHEMA"                                         {return SCHEMA;}   
 "DATABASE"                                       {return DATABASE;}
 
-"SELECT INTO"                                    {return SELECT;}       /*Data Manipulation Language*/
-"INSERT"                                         {return INSERT;}  
+"SELECT"                                         {return SELECT;}       /*Data Manipulation Language*/
+"INSERT INTO"                                    {return INSERT;}  
 "DELETE"                                         {return DELETE;}  
 "UPDATE"                                         {return UPDATE;}  
 
@@ -34,6 +34,9 @@ INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT;}     /*Tipos 
 \"[0-9a-zA-Z_ ]*\"|[0-9]+                        {return CONST;}        /*Constante*/
 [a-zA-Z_]+[,]?|[*]                               {return IDENT;}        /*Identificadores*/
 [0-9]+                                           {return NUM;}          /*Número*/
+"("                                              {return ParentesisA;}   
+")"                                              {return ParentesisC;}   
+","                                              {return COMMA;}   
 ";"                                              {return SEMICOLON;}    /*Punto y coma final*/
 [ \t]
 . printf("%s es: Caracter desconocido\n", yytext);

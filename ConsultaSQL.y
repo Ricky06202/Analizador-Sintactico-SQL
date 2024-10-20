@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 void yyerror(const char *s);
-int yylex(void);
+int yylex();
 
 %}
 
@@ -23,7 +23,7 @@ int yylex(void);
 /*Operadores*/
 %token LOGIC
 /*Tipos de datos, relaciones, constantes, identificadores, números y punto y coma final de la declaración*/
-%token TRANSACT RELAC CONST IDENT NUM SEMICOLON
+%token TRANSACT RELAC CONST IDENT NUM ParentesisA ParentesisC COMMA SEMICOLON
 
 
 %% /*Aqui va las instrucciones como si trabajaramos con GLC*/
@@ -37,32 +37,22 @@ input: /* entrada vacia */
 /*Consultas*/
 consult: commandDLL
     | commandDML
+    /* | DROP identifier SEMICOLON */
     ;
 
 /*Comandos para CREATE, DROP, ALTER y TRUNCATE*/
-commandDLL: CREATE TABLE identifier '(' fieldsDLL ')' SEMICOLON
+commandDLL: CREATE TABLE identifier ParentesisA fieldsDLL ParentesisC SEMICOLON
     | DROP TABLE identifier SEMICOLON
-    | ALTER TABLE identifier ADD identifier TRANSACT '(' NUM ')' SEMICOLON
+    | ALTER TABLE identifier ADD identifier TRANSACT ParentesisA NUM ParentesisC SEMICOLON
     | TRUNCATE TABLE identifier SEMICOLON
     ;
 
 /*Comandos para INSERT SELECT UPDATE y DELETE*/
 commandDML: selectCondition SEMICOLON
-    | INSERT identifier '(' fieldsDML ')' VALUES '(' fieldsDML ')' SEMICOLON
+    | INSERT identifier ParentesisA fieldsDML ParentesisC VALUES ParentesisA fieldsDML ParentesisC SEMICOLON
     | UPDATE identifier SET whereCondition SEMICOLON
     | DELETE FROM identifier whereCondition SEMICOLON
     ;
-
-/*Campos de la tabla */
-fieldsDLL: identifier TRANSACT '(' NUM ')'
-    | ',' fieldsDLL
-    ;
-
-/*Campos de los datos */
-fieldsDML: identifier
-    | ',' fieldsDML
-    ;
-
 /*Encontrar condiciones para el select*/
 selectCondition: SELECT fieldsDML FROM identifier
     | selectCondition whereCondition
@@ -70,22 +60,29 @@ selectCondition: SELECT fieldsDML FROM identifier
 
 /*Encontrar condiciones en el where*/
 whereCondition: WHERE identifier RELAC identifier
-    | whereCondition LOGIC WHERE identifier RELAC identifier
+    | whereCondition LOGIC identifier RELAC identifier
+    ;
+
+/*Campos de la tabla */
+fieldsDLL: identifier TRANSACT ParentesisA NUM ParentesisC
+    | fieldsDLL COMMA identifier TRANSACT ParentesisA NUM ParentesisC
+    ;
+
+/*Campos de los datos */
+fieldsDML: identifier
+    | fieldsDML COMMA identifier
     ;
 
 /*detectar nombre del identificador*/
 identifier: IDENT
-    CONST
+    | CONST
     ;
 
 %%
 
 int main(){
-    prinf("Iniciando analisis sintactico...\n");
-
-        yyparse();
-
-    prinf("Iniciando analisis sintactico...\n");
+    printf("Iniciando analisis sintactico...\n");
+    yyparse();
     return 0;
 }
 
