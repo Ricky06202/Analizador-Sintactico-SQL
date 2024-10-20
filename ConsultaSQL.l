@@ -39,7 +39,7 @@ INT|FLOAT|CHAR|VARCHAR|REAL                      {return TRANSACT;}     /*Tipos 
 ","                                              {return COMMA;}   
 ";"                                              {return SEMICOLON;}    /*Punto y coma final*/
 [ \t]
-. printf("%s es: Caracter desconocido\n", yytext);
+. printf("Error léxico: %s\n", yytext);
 %%
 
 int yywrap() {

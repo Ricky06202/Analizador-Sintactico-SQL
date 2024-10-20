@@ -31,27 +31,32 @@ int yylex();
 /* Entrada de la consulta sql */
 input: /* entrada vacia */
     | input consult {printf("Consulta correcta. \n")}
+    | input errorSintaxis 
     | input 'salir' {printf("Saliendo del programa. \n"); exit(0)}
     ;
 
 /*Consultas*/
-consult: commandDLL
-    | commandDML
+consult: commandDLL SEMICOLON       
+    | commandDML SEMICOLON          
     /* | DROP identifier SEMICOLON */
     ;
 
+errorSintaxis: commandDLL           {printf("La consulta debe terminar con ; \n")}
+    | commandDML                    {printf("La consulta debe terminar con ; \n")}
+    ;
+
 /*Comandos para CREATE, DROP, ALTER y TRUNCATE*/
-commandDLL: CREATE TABLE identifier ParentesisA fieldsDLL ParentesisC SEMICOLON
-    | DROP TABLE identifier SEMICOLON
-    | ALTER TABLE identifier ADD identifier TRANSACT ParentesisA NUM ParentesisC SEMICOLON
-    | TRUNCATE TABLE identifier SEMICOLON
+commandDLL: CREATE TABLE identifier ParentesisA fieldsDLL ParentesisC 
+    | DROP TABLE identifier 
+    | ALTER TABLE identifier ADD identifier TRANSACT ParentesisA NUM ParentesisC 
+    | TRUNCATE TABLE identifier 
     ;
 
 /*Comandos para INSERT SELECT UPDATE y DELETE*/
-commandDML: selectCondition SEMICOLON
-    | INSERT identifier ParentesisA fieldsDML ParentesisC VALUES ParentesisA fieldsDML ParentesisC SEMICOLON
-    | UPDATE identifier SET whereCondition SEMICOLON
-    | DELETE FROM identifier whereCondition SEMICOLON
+commandDML: selectCondition 
+    | INSERT identifier ParentesisA fieldsDML ParentesisC VALUES ParentesisA fieldsDML ParentesisC 
+    | UPDATE identifier SET whereCondition 
+    | DELETE FROM identifier whereCondition 
     ;
 /*Encontrar condiciones para el select*/
 selectCondition: SELECT fieldsDML FROM identifier
@@ -78,14 +83,24 @@ identifier: IDENT
     | CONST
     ;
 
+/*---------------------------------------------------------------------------*/
+selectError: fieldsDML SELECT FROM identifier
+    | selectCondition whereCondition
+    ;
+
+
 %%
 
 int main(){
-    printf("Iniciando analisis sintactico...\n");
+    printf("Ingresar una consulta para SQL\n");
     yyparse();
     return 0;
 }
 
-void yyerror(const char *s) {
+/* void yyerror(const char *s) {
     fprintf(stderr, "Error sintactico: %s\n", s);
+} */
+
+void yyerror(const char* msg) {
+    fprintf(stderr, "Error sintáctico en la línea %d: %s\n", yylineno, msg);
 }

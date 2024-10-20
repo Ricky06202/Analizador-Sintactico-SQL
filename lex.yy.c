@@ -1,5 +1,6 @@
+#line 2 "lex.yy.c"
 
-#line 3 "lex.yy.c"
+#line 4 "lex.yy.c"
 
 #define  YY_INT_ALIGNED short int
 
@@ -575,7 +576,7 @@ char *yytext;
 #line 2 "ConsultaSQL.l"
 #include <stdio.h>
 #include "ConsultaSQL.tab.h"
-#line 579 "lex.yy.c"
+#line 580 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -764,7 +765,7 @@ YY_DECL
     
 #line 6 "ConsultaSQL.l"
 
-#line 768 "lex.yy.c"
+#line 769 "lex.yy.c"
 
 	if ( !(yy_init) )
 		{
@@ -1007,7 +1008,7 @@ YY_RULE_SETUP
 #line 43 "ConsultaSQL.l"
 ECHO;
 	YY_BREAK
-#line 1011 "lex.yy.c"
+#line 1012 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
